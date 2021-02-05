@@ -33,11 +33,11 @@ public class CmiApplication {
 			accountService.saveRole(new AppRole(null,"USER"));
 			accountService.saveRole(new AppRole(null,"ADMIN"));
 
-			Stream.of("ZIDANI Mohamed 0649735026","HANOUN Youssef 0612365478","ADMIN ADMIN 0668797072").forEach(a->{
+			Stream.of("ZIDANI Mohamed +212649735026").forEach(a->{
 				accountService.saveClient(new Client(null,a.split(" ")[0],a.split(" ")[1],null,a.split(" ")[2],null,false,200000.0,"a1",new ArrayList<>()));
 			});
 
-			accountService.addRoleToClient("0668797072", "ADMIN");
+			//accountService.addRoleToClient("0668797072", "ADMIN");
 
 			Stream.of("c1 IAM RECHARGES operateur").forEach(a->{
 				accountService.saveCreancier(new Creancier(a.split(" ")[0],a.split(" ")[1]+" "+a.split(" ")[2],a.split(" ")[3],"http://localhost:4000/",new ArrayList<>()));

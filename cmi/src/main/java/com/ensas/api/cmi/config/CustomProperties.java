@@ -9,5 +9,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "com.ensas.api.cmi")
 public class CustomProperties {
 
-    String apiIAMUrL;
+    private String apiIAMUrL;
+    private String accountSid;
+    private String authToken;
+    private String trialNumber;
+
 }

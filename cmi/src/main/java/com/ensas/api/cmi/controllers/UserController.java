@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 public class UserController {
-
+/*
     @Autowired
     private AccountService accountService;
 
@@ -23,15 +23,15 @@ public class UserController {
     public Client register(@RequestBody Client client){
         return accountService.saveClient(client);
     }
-/*
+
     @GetMapping("/solde")
     public Double getSolde(){
         return accountService.getClientSolde();
     }
-*/
+
     @GetMapping("/listcreancier")
     public List<Creancier> getListCreancier(){
         return accountService.getListCreancier();
-    }
+    }*/
 }
 

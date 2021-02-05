@@ -7,6 +7,8 @@ import com.ensas.api.cmi.repositories.ClientRepository;
 import com.ensas.api.cmi.repositories.CreancierRepository;
 import com.ensas.api.cmi.repositories.TransactionRepository;
 import com.ensas.api.cmi.sec.UserContext;
+import com.ensas.api.cmi.sms.SmsRequest;
+import com.ensas.api.cmi.sms.SmsSender;
 import org.json.simple.JSONObject;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class AccountServiceImpl implements AccountService {
     private UserContext userContext;
     @Autowired
     private ApiProxy proxy;
+    @Autowired
+    private SmsSender smsSender;
 
     @Override
     public Client saveClient(Client client) {
@@ -44,6 +48,9 @@ public class AccountServiceImpl implements AccountService {
         System.out.println("***************");
         System.out.println("Login : "+client.getNumTel()+"\nPassword : "+randomPass);
         System.out.println("***************");
+        String msg = "Bonjour,\nVous pouvez utiliser l'application ENSAPAY pour payer vos factures en le compte :\nLogin : "+client.getNumTel()+"\nPassword : "+randomPass;
+        SmsRequest smsRequest = new SmsRequest(client.getNumTel(),msg);
+        smsSender.sendSms(smsRequest);
         client.setPassword(bCryptPasswordEncoder.encode(randomPass));
         client.setActived(false);
         //client.setRoles(new ArrayList<>());
@@ -77,6 +84,7 @@ public class AccountServiceImpl implements AccountService {
         clientRepository.deleteAll();
         appRoleRepository.deleteAll();
         creancierRepository.deleteAll();
+        transactionRepository.deleteAll();
     }
 
     @Override
@@ -163,7 +171,8 @@ public class AccountServiceImpl implements AccountService {
         Date date = new Date();
         //SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         //System.out.println(formatter.format(date));
-        Transaction transaction = new Transaction(null,clientID,codeCr,montant,date);
+        String creancierNom=creancierRepository.findById(codeCr).get().getNom();
+        Transaction transaction = new Transaction(null,clientID,creancierNom,montant,date);
         return transactionRepository.save(transaction);
     }
 

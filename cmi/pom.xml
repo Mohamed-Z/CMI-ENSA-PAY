@@ -103,6 +103,12 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>8.6.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
